@@ -2,10 +2,10 @@ package rules;
 
 import java.util.ArrayList;
 
-public class BERMessage extends Message{
+public class BERDecoder extends Decoder{
 	private byte[] bytes;
 
-	public BERMessage(byte[] bytes) {
+	public BERDecoder(byte[] bytes) {
 		this.bytes = bytes;
 		ArrayList<String> tag = new ArrayList<String>();
 		

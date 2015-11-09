@@ -8,8 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import rules.BERMessage;
-import rules.Message;
+import rules.BERDecoder;
+import rules.Decoder;
 
 public class Main {
 
@@ -23,10 +23,10 @@ public class Main {
 	    return file.getAbsolutePath();
 	}
 	
-	private static Message decodeMessage(String rule, byte[] bytes){
+	private static Decoder decodeMessage(String rule, byte[] bytes){
 		switch(rule){
 		case "BER":
-			return new BERMessage(bytes);
+			return new BERDecoder(bytes);
 		default:
 			return null;
 		}

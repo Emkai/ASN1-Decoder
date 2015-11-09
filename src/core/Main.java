@@ -1,6 +1,7 @@
 package core;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,7 +14,13 @@ import rules.Message;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		
+		byte[] bytes = readBinaryFile(getCleanPath()+"/res/NRTEST1SWETR0386");
+		decodeMessage("BER", bytes);
+	}
+	
+	public static String getCleanPath() {
+		java.io.File file = new java.io.File("");   //Dummy file
+	    return file.getAbsolutePath();
 	}
 	
 	private static Message decodeMessage(String rule, byte[] bytes){
@@ -28,12 +35,13 @@ public class Main {
 	private static byte[] readBinaryFile(String filePath) throws IOException{
 		try{
 			Path path = Paths.get(filePath);
-		    byte[] bytes = Files.readAllBytes(Paths.get("C:/Users/Mattias/Documents/GitHub/arctic-group/ASN1-Decoder/res/NRTEST1SWETR0386"));
+		    byte[] bytes = Files.readAllBytes(path);
 		    return bytes;
 		}
 		catch(Exception e){
-			throw(e);
+			System.out.println(e.getMessage());
 		}
+		return null;
 	}
 	
 	private static byte[] readBinaryFile2(String filePath) throws IOException{

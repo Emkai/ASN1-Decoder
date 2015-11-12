@@ -18,6 +18,8 @@ public class DecoderGUI {
 
 	private JFrame frame;
 	private JTextField txtEnterFilePath;
+	private JButton btnOk;
+	
 
 	/**
 	 * @wbp.nonvisual location=188,179
@@ -54,14 +56,23 @@ public class DecoderGUI {
 	private void initialize() {
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 430, 120);
+		frame.setBounds(100, 100, 430, 180);
 		frame.setTitle("ASN1-Decoder");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
 	
 	
 	
 		
 		JButton btnBrowse = new JButton("Browse...");
+		btnBrowse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				DecoderGUIBrowse Browse = new DecoderGUIBrowse();
+				Browse.NewScreen();
+			}
+		});
 		btnBrowse.setBounds(309, 30, 89, 23);
 		frame.getContentPane().add(btnBrowse);
 	
@@ -73,10 +84,16 @@ public class DecoderGUI {
 		txtEnterFilePath.setBounds(10, 30, 289, 23);
 		frame.getContentPane().add(txtEnterFilePath);
 		txtEnterFilePath.setColumns(10);
-	}
-
-
 		
-	
+		btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnOk.setBounds(309, 107, 89, 23);
+		frame.getContentPane().add(btnOk);
+		
+	}
 	}
 

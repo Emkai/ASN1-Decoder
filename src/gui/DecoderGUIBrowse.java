@@ -38,11 +38,12 @@ public class DecoderGUIBrowse {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 695, 444);
+		frame.setBounds(400, 100, 616, 455);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setBounds(10, 11, 582, 397);
+		frame.getContentPane().add(fileChooser);
 	}
-
-	
-
 }

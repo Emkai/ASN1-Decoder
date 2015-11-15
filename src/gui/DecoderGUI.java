@@ -56,7 +56,7 @@ public class DecoderGUI {
 	private void initialize() {
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 430, 180);
+		frame.setBounds(300, 100, 430, 180);
 		frame.setTitle("ASN1-Decoder");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);

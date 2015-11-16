@@ -14,17 +14,32 @@ public class BERDecoder extends Decoder{
 	}
 	
 	private void decodeTag(){
+		// Stores tag information such as, Class, P/C and tag type
 		ArrayList<String> tag = new ArrayList<String>();
+		// For storing the data if it is a primitive tag
 		ArrayList<Byte> dataBytes = new ArrayList<Byte>();
+		
+		
 		System.out.println("Byte pos: " + this.byteCurrently +", Bytes: "+ (this.bytes[this.byteCurrently]&0x0ff ) +", " +(this.bytes[this.byteCurrently+1]&0x0ff ));
+		
+		// Read the tag octet
 		tag = readTag();
+		
+		
 		System.out.print("Class: " + tag.get(0));
 		System.out.print(", P/C: " + tag.get(1));
 		System.out.print(", Tag: " + tag.get(2));
+		
+		
+		// Read the length octet/octets
 		int length = readLength();
+		
+		
 		System.out.print(", Lenght: " + length);
 		System.out.println("");
 		
+		
+		// If it is primitive we store the next octets in the dataBytes
 		if(tag.get(1) == "Primitive"){
 			int endbyte = this.byteCurrently+length;
 			for (int i = this.byteCurrently; i < endbyte;i++ ){
@@ -34,9 +49,11 @@ public class BERDecoder extends Decoder{
 			}
 			
 		}
+		
+		// If it is constructed we loop through and read all the tags in the constructed tag.
 		else{
 			int endByte = this.byteCurrently+length;
-			while ( this.byteCurrently <= endByte){
+			while ( this.byteCurrently < endByte){
 				decodeTag();
 			}
 		}
@@ -67,17 +84,14 @@ public class BERDecoder extends Decoder{
 		}
 		
 		if (  (this.bytes[this.byteCurrently]&0x1f ) > 30 ){
-			System.out.print("Type-type: Long, ");
 			tag.add(readLongType());
 		}
 		else{
-			System.out.print("Type-type: Short, ");
 			String s = "" + (this.bytes[this.byteCurrently]&0x1f);
 			tag.add(s);
 			
 		}
 		this.byteCurrently++;
-		System.out.println("\nAfter read tag at: "+this.byteCurrently);
 		return tag;
 	}
 	
@@ -85,27 +99,27 @@ public class BERDecoder extends Decoder{
 		this.byteCurrently++;
 		String type = "" + (this.bytes[this.byteCurrently]&0x7F);
 		if((this.bytes[this.byteCurrently]>>7 & 1) == 1){
-			
 			type += readLongType();
 			return type;
 		}
-		
 		return "" + (this.bytes[this.byteCurrently]&0x07F);
 	}
 	
-	
-	
 	private int readLength(){
+		
 		// If the last bit is set to 1, this is a long length
 		if ( ((this.bytes[this.byteCurrently] >> 7) & 1) == 1 ){
+			
 			// If 10000000 is the length octet then indefinite form is used, here we check if it is not indefinite
 			if((this.bytes[this.byteCurrently]&0x07F) != 0){
-				System.out.print(", Length-type: Long");
 				int lengthOctets = this.bytes[this.byteCurrently]&0x07F;
 				String length = "";
+				
+				// Go though all lenght octets and add them to length
 				for(int i = 1; i < lengthOctets+1; i++){
 					length += this.bytes[this.byteCurrently + i]&0x0ff;
 				}
+				// Need to jump ahead same amout of bytes as we just read.
 				for(int i = 1; i < lengthOctets+1; i++){
 					this.byteCurrently++;
 				}
@@ -114,14 +128,11 @@ public class BERDecoder extends Decoder{
 			}
 			// Not implemetet yet, indefinite
 			else{
-				System.out.print(", Length-type: Indefinite");
 				return 0;
 			}
 		}
 		// else short length
 		else{
-			System.out.print(", Length-type: Short");
-			
 			int length = (int)this.bytes[this.byteCurrently]&0x0FF;
 			this.byteCurrently++;
 			return length;

@@ -1,30 +1,25 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JButton;
-import java.awt.BorderLayout;
-import javax.swing.JTextField;
-import javax.swing.AbstractAction;
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
 import java.awt.event.ActionEvent;
-import javax.swing.Action;
 import java.awt.event.ActionListener;
-import java.awt.List;
-import java.awt.Choice;
+import java.io.File;
+import java.io.FilenameFilter;
+
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class DecoderGUI {
 
-	private JFrame frame;
+	public JFrame frame;
 	private JTextField txtEnterFilePath;
-	private JButton btnOk;
-	
-
-	/**
-	 * @wbp.nonvisual location=188,179
-	 */
-	
+	public String filePath;
 
 
 	/**
@@ -42,7 +37,7 @@ public class DecoderGUI {
 			}
 		});
 	}
-
+		
 	/**
 	 * Create the application.
 	 */
@@ -54,46 +49,76 @@ public class DecoderGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
 		frame = new JFrame();
-		frame.setBounds(300, 100, 430, 180);
 		frame.setTitle("ASN1-Decoder");
+		frame.setBounds(100, 100, 709, 234);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-	
-	
-	
+        //Creates the area to display information
+		final JTextArea textArea = new JTextArea();
+		textArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
+		textArea.setForeground(Color.BLACK);
+		textArea.setBackground(Color.WHITE);
+		textArea.setEditable(false);
+		textArea.setBounds(28,53,534,112);
+		frame.getContentPane().add(textArea);
 		
+		
+
+		
+		
+		//Browse button that allows me to chose a file
 		JButton btnBrowse = new JButton("Browse...");
 		btnBrowse.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent arg0) {
+				DecoderStart of = new DecoderStart();
+
 				
-				DecoderGUIBrowse Browse = new DecoderGUIBrowse();
-				Browse.NewScreen();
+				try{
+					of.PickFile();
+				}
+				catch (Exception e) {
+					
+					e.printStackTrace();
+				}
+				filePath = of.path;
+				txtEnterFilePath.setText(of.path);
+				textArea.setText(of.sb.toString());
+				
 			}
-		});
-		btnBrowse.setBounds(309, 30, 89, 23);
+			});
+		
+		btnBrowse.setBounds(573, 10, 110, 23);
 		frame.getContentPane().add(btnBrowse);
-	
-	
-	
 		
-		txtEnterFilePath = new JTextField();
-		txtEnterFilePath.setText("Enter file path...");
-		txtEnterFilePath.setBounds(10, 30, 289, 23);
-		frame.getContentPane().add(txtEnterFilePath);
-		txtEnterFilePath.setColumns(10);
-		
-		btnOk = new JButton("OK");
-		btnOk.addActionListener(new ActionListener() {
+		//Close window button
+		JButton btnClose = new JButton ("Close");
+		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
+	
 		});
-		btnOk.setBounds(309, 107, 89, 23);
-		frame.getContentPane().add(btnOk);
+		btnClose.setBounds(573, 142, 110, 23);
+		frame.getContentPane().add(btnClose);
 		
-	}
-	}
+		//Shows which file you chose
+		txtEnterFilePath = new JTextField();
+		txtEnterFilePath.setText("Enter file path...");
+		txtEnterFilePath.setBounds(28, 11, 534, 20);
+		frame.getContentPane().add(txtEnterFilePath);
+		txtEnterFilePath.setColumns(10);
+
+		}
+}
+	
+
+	
+			
+			
+		
+		
+	
+
 

@@ -9,8 +9,10 @@ public class BERDecoder extends Decoder{
 	public BERDecoder(byte[] bytes) {
 		this.bytes = bytes;
 		this.byteCurrently = 0;
-		
-		decodeTag();
+		int endByte = bytes.length;
+		while ( this.byteCurrently < endByte){
+			decodeTag();
+		}
 	}
 	
 	private void decodeTag(){
@@ -46,15 +48,20 @@ public class BERDecoder extends Decoder{
 				dataBytes.add(bytes[i]);
 					this.byteCurrently++;
 				
-			}
-			
+			}			
 		}
 		
 		// If it is constructed we loop through and read all the tags in the constructed tag.
 		else{
-			int endByte = this.byteCurrently+length;
-			while ( this.byteCurrently < endByte){
-				decodeTag();
+			// if length is -1 then we have indefinite length
+			if ( length == -1 ){
+				
+			}
+			else {
+				int endByte = this.byteCurrently+length;
+				while ( this.byteCurrently < endByte){
+					decodeTag();
+				}
 			}
 		}
 	}
@@ -128,7 +135,7 @@ public class BERDecoder extends Decoder{
 			}
 			// Not implemetet yet, indefinite
 			else{
-				return 0;
+				return -1;
 			}
 		}
 		// else short length

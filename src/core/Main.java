@@ -14,6 +14,7 @@ import rules.Decoder;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
+		// NRTRDE-0201.asn
 		byte[] bytes = readBinaryFile(getCleanPath()+"/res/NRTEST1SWETR0386");
 		decodeMessage("BER", bytes);
 	}

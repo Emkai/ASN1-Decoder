@@ -7,18 +7,36 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import rules.BERDecoder;
+import rules.BERTag;
 import rules.Decoder;
+import rules.Tag;
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
 		// NRTRDE-0201.asn
 		byte[] bytes = readBinaryFile(getCleanPath()+"/res/NRTEST1SWETR0386");
-		decodeMessage("BER", bytes);
+		Decoder decoder = decodeMessage("BER", bytes);
+		ArrayList<Tag> tags = decoder.getTags();
+		convertTags("BER", tags, "XML");
+		
 	}
 	
+	private static void convertTags(String rule, ArrayList<Tag> tags, String format) {
+		switch(format){
+		case "XML":
+			XML.convert(rule, tags);
+			break;
+			
+		default:
+			break;
+		}
+		
+	}
+
 	public static String getCleanPath() {
 		java.io.File file = new java.io.File("");   //Dummy file
 	    return file.getAbsolutePath();
@@ -27,7 +45,8 @@ public class Main {
 	private static Decoder decodeMessage(String rule, byte[] bytes){
 		switch(rule){
 		case "BER":
-			return new BERDecoder(bytes);
+			BERDecoder berDecoder = new BERDecoder(bytes);
+			return berDecoder;
 		default:
 			return null;
 		}

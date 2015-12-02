@@ -5,17 +5,19 @@ import java.util.ArrayList;
 public class BERDecoder extends Decoder{
 	private byte[] bytes;
 	private int byteCurrently;
+	
 
 	public BERDecoder(byte[] bytes) {
 		this.bytes = bytes;
 		this.byteCurrently = 0;
 		int endByte = bytes.length;
 		while ( this.byteCurrently < endByte){
-			decodeTag();
+			tags.add(decodeTag());
 		}
 	}
 	
-	private void decodeTag(){
+
+	private BERTag decodeTag(){
 		// Stores tag information such as, Class, P/C and tag type
 		ArrayList<String> tag = new ArrayList<String>();
 		// For storing the data if it is a primitive tag
@@ -40,7 +42,7 @@ public class BERDecoder extends Decoder{
 		System.out.print(", Lenght: " + length);
 		System.out.println("");
 		
-		
+		BERTag theTag = new BERTag(tag.get(0), tag.get(1), Integer.parseInt(tag.get(2)), length);
 		// If it is primitive we store the next octets in the dataBytes
 		if(tag.get(1) == "Primitive"){
 			int endbyte = this.byteCurrently+length;
@@ -48,22 +50,12 @@ public class BERDecoder extends Decoder{
 				dataBytes.add(bytes[i]);
 					this.byteCurrently++;
 				
-			}			
+			}
+			theTag.setTagData(dataBytes);
 		}
 		
 		// If it is constructed we loop through and read all the tags in the constructed tag.
-		else{
-			// if length is -1 then we have indefinite length
-			if ( length == -1 ){
-				
-			}
-			else {
-				int endByte = this.byteCurrently+length;
-				while ( this.byteCurrently < endByte){
-					decodeTag();
-				}
-			}
-		}
+		return theTag;
 	}
 	
 	private ArrayList<String> readTag(){

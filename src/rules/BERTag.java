@@ -8,12 +8,13 @@ public class BERTag extends Tag {
 	private int tagType;
 	private int tagLength;
 	private ArrayList<Byte> tagData;
+	private ArrayList<Tag> tagTags;
 
 	public BERTag(String tagClass, String tagCP, int tagType, int tagLength) {
 		this.tagClass = tagClass;
 		this.tagCP = tagCP;
 		this.tagType = tagType;
-		this.tagType = tagLength;
+		this.tagLength = tagLength;
 	}
 
 	@Override

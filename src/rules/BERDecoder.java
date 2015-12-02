@@ -55,6 +55,26 @@ public class BERDecoder extends Decoder{
 		}
 		
 		// If it is constructed we loop through and read all the tags in the constructed tag.
+		else{
+			// if length is -1 then we have indefinite length
+			if ( length == -1 ){
+				boolean noEndofContent = true;
+				while (noEndofContent){
+					BERTag nextTag = decodeTag();
+					if (nextTag.getTagClass() == "Universal" && nextTag.getTagCP() == "Primitive" && nextTag.getTagType() == 0){
+						noEndofContent = false;
+					}
+					this.tags.add(nextTag);
+				}
+			}
+			else {
+				int endByte = this.byteCurrently+length;
+				while ( this.byteCurrently < endByte){
+					this.tags.add(decodeTag());
+				}
+			}
+		}
+		
 		return theTag;
 	}
 	

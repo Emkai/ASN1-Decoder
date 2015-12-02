@@ -16,6 +16,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		byte[] bytes = readBinaryFile(getCleanPath()+"/res/NRTEST1SWETR0386");
 		decodeMessage("BER", bytes);
+		storedconvert.XML.initFile();
 	}
 	
 	public static String getCleanPath() {

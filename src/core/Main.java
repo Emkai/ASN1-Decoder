@@ -22,7 +22,7 @@ public class Main {
 		Decoder decoder = decodeMessage("BER", bytes);
 		ArrayList<Tag> tags = decoder.getTags();
 		convertTags("BER", tags, "XML");
-		
+
 	}
 	
 	private static void convertTags(String rule, ArrayList<Tag> tags, String format) {

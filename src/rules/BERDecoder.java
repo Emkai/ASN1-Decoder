@@ -63,8 +63,8 @@ public class BERDecoder extends Decoder{
 					BERTag nextTag = decodeTag();
 					if (nextTag.getTagClass() == "Universal" && nextTag.getTagCP() == "Primitive" && nextTag.getTagType() == 0){
 						noEndofContent = false;
-					}
-					this.tags.add(nextTag);
+					} 
+					theTag.addTag(nextTag);
 				}
 			}
 			else {

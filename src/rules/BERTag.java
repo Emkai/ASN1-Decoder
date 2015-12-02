@@ -61,4 +61,9 @@ public class BERTag extends Tag {
 	public void setTagData(ArrayList<Byte> dataBytes) {
 		this.tagData = dataBytes;
 	}
+
+	public void addTag(BERTag nextTag) {
+		this.tagTags.add(nextTag);
+		
+	}
 }

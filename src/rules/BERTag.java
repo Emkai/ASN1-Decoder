@@ -13,11 +13,11 @@ public class BERTag extends Tag {
 		this.tagClass = tagClass;
 		this.tagCP = tagCP;
 		this.tagType = tagType;
-		this.tagType = tagLength;
+		this.tagLength = tagLength;
 	}
 
 	@Override
-	String getInfoAboutMe(){
+	public String getInfoAboutMe(){
 		return "tagClass: " + tagClass + ", tagCP: " + tagCP + ", tagType: " + tagType + ", tagLength: " + tagLength;
 	}
 

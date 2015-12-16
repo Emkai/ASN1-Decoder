@@ -28,7 +28,7 @@ public class Main {
 	private static void convertTags(String rule, ArrayList<Tag> tags, String format) {
 		switch(format){
 		case "XML":
-			XML.convert(rule, tags);
+			storedconvert.XML.convert(rule, tags);
 			break;
 			
 		default:

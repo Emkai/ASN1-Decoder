@@ -18,7 +18,7 @@ public class BERTag extends Tag {
 	}
 
 	@Override
-	String getInfoAboutMe(){
+	public String getInfoAboutMe(){
 		return "tagClass: " + tagClass + ", tagCP: " + tagCP + ", tagType: " + tagType + ", tagLength: " + tagLength;
 	}
 

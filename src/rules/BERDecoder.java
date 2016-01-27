@@ -29,11 +29,9 @@ public class BERDecoder extends Decoder{
 		// Read the tag octet
 		tag = readTag();
 		
-		
 		System.out.print("         Class: " + tag.get(0));
 		System.out.print(", P/C: " + tag.get(1));
 		System.out.print(", Tag: " + tag.get(2));
-		
 		
 		// Read the length octet/octets
 		int length = readLength();
@@ -45,7 +43,6 @@ public class BERDecoder extends Decoder{
 		BERTag theTag = new BERTag(tag.get(0), tag.get(1), Integer.parseInt(tag.get(2)), length);
 		// If it is primitive we store the next octets in the dataBytes
 		if(tag.get(1) == "Primitive"){
-			System.out.println("hello");
 			int endbyte = this.byteCurrently+length;
 			for (int i = this.byteCurrently; i < endbyte;i++ ){
 				dataBytes.add(bytes[i]);
@@ -57,7 +54,6 @@ public class BERDecoder extends Decoder{
 		
 		// If it is constructed we loop through and read all the tags in the constructed tag.
 		else{
-			System.out.println("hello");
 			// if length is -1 then we have indefinite length
 			if ( length == -1 ){
 				boolean endofContent = false;

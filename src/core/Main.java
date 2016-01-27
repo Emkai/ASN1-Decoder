@@ -19,6 +19,8 @@ import rules.Tag;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
+
+	
 		// NRTRDE-0201.asn
 		// NRTEST1SWETR0386
 		// CDDNKTDSWETR90904.xml.asn
@@ -28,6 +30,7 @@ public class Main {
 		FileOutputStream out = new FileOutputStream ("hej");
 		
 		byte[] bytes = readBinaryFile(getCleanPath()+"/res/CDHNDMESWETR03713");
+
 		Decoder decoder = decodeMessage("BER", bytes);
 		ArrayList<Tag> tags = decoder.getTags();
 		convertTags("BER", tags, "XML");

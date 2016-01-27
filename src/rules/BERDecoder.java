@@ -68,6 +68,7 @@ public class BERDecoder extends Decoder{
 			else {
 				int endByte = this.byteCurrently+length;
 				while ( this.byteCurrently < endByte){
+
 					if (endByte > bytes.length){
 						System.out.println("\nERROR::  TO LONG, end of tag is at byte " + endByte + " and is greater that total amount of bytes " + bytes.length + "\n");
 					}
@@ -75,6 +76,7 @@ public class BERDecoder extends Decoder{
 						System.out.println("ERROR:: Trying to read byte that is beyond end of file");
 						return theTag;
 					}
+
 					theTag.addTag(decodeTag());
 				}
 			}

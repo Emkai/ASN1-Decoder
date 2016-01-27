@@ -70,7 +70,7 @@ public class BERDecoder extends Decoder{
 			else {
 				int endByte = this.byteCurrently+length;
 				while ( this.byteCurrently < endByte){
-					this.tags.add(decodeTag());
+					theTag.addTag(decodeTag());
 				}
 			}
 		}

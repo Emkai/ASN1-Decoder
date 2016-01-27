@@ -66,4 +66,7 @@ public class BERTag extends Tag {
 		this.tagTags.add(nextTag);
 		
 	}
+	public ArrayList<Tag> getTagTags(){
+		 return this.tagTags;
+	}
 }

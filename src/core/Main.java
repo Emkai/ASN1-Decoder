@@ -18,8 +18,9 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		// NRTRDE-0201.asn
-		// NRTEST1SWETR0386
-		byte[] bytes = readBinaryFile(getCleanPath()+"/res/NRTEST1SWETR0386");
+		// NRNRTEST1SWETR0386
+		// CDDNKTDSWETR90904.xml.asn
+		byte[] bytes = readBinaryFile(getCleanPath()+"/res/CDDNKTDSWETR90904.xml.asn");
 		Decoder decoder = decodeMessage("BER", bytes);
 		ArrayList<Tag> tags = decoder.getTags();
 		convertTags("BER", tags, "XML");

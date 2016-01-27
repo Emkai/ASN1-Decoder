@@ -8,6 +8,7 @@ public class BERTag extends Tag {
 	private int tagType;
 	private int tagLength;
 	private ArrayList<Byte> tagData;
+	private ArrayList<Tag> tagTags;
 
 	public BERTag(String tagClass, String tagCP, int tagType, int tagLength) {
 		this.tagClass = tagClass;
@@ -59,5 +60,10 @@ public class BERTag extends Tag {
 
 	public void setTagData(ArrayList<Byte> dataBytes) {
 		this.tagData = dataBytes;
+	}
+
+	public void addTag(BERTag nextTag) {
+		this.tagTags.add(nextTag);
+		
 	}
 }

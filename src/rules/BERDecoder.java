@@ -45,6 +45,7 @@ public class BERDecoder extends Decoder{
 		BERTag theTag = new BERTag(tag.get(0), tag.get(1), Integer.parseInt(tag.get(2)), length);
 		// If it is primitive we store the next octets in the dataBytes
 		if(tag.get(1) == "Primitive"){
+			System.out.println("hello");
 			int endbyte = this.byteCurrently+length;
 			for (int i = this.byteCurrently; i < endbyte;i++ ){
 				dataBytes.add(bytes[i]);
@@ -56,13 +57,14 @@ public class BERDecoder extends Decoder{
 		
 		// If it is constructed we loop through and read all the tags in the constructed tag.
 		else{
+			System.out.println("hello");
 			// if length is -1 then we have indefinite length
 			if ( length == -1 ){
-				boolean noEndofContent = true;
-				while (noEndofContent){
+				boolean endofContent = false;
+				while (!endofContent){
 					BERTag nextTag = decodeTag();
 					if (nextTag.getTagClass() == "Universal" && nextTag.getTagCP() == "Primitive" && nextTag.getTagType() == 0){
-						noEndofContent = false;
+						endofContent = true;
 					} 
 					theTag.addTag(nextTag);
 				}
@@ -77,7 +79,7 @@ public class BERDecoder extends Decoder{
 						System.out.println("ERROR:: Trying to read byte that is beyond end of file");
 						return theTag;
 					}
-					this.tags.add(decodeTag());
+					theTag.addTag(decodeTag());
 				}
 			}
 		}

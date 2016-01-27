@@ -30,8 +30,10 @@ import rules.Tag;
 
 public class XML {
 	
+	
 	private static String fileContent = "";
-
+	static String indent = "";
+	
 	public static void convert(String rule, ArrayList<Tag> tags) {		
 		switch(rule) {
 			case "BER":
@@ -42,7 +44,7 @@ public class XML {
 	private static void convertBERtoXML(ArrayList<Tag> tags) {
 	
 		
-		String indent = "";
+		
 		
 		/*DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 	        Date today = Calendar.getInstance().getTime();*/
@@ -55,6 +57,7 @@ public class XML {
 				PrimitiveOrConstructed((BERTag)tag);
 			}
 			writer = new PrintWriter("res/xml/DecodedMessage.xml", "UTF-8");
+			fileContent = fileContent.replaceAll("\n", System.lineSeparator());
 			writer.println(fileContent);
 			writer.close();
 			
@@ -72,16 +75,24 @@ public class XML {
 	
 	private static void PrimitiveOrConstructed(BERTag tag) {
 		if (tag.getTagCP() == "Primitive" ) {
-			fileContent +=""+  
-					"<"+tag.getTagType()+">" + tag.getTagData() + "</"+tag.getTagType()+">" ;	
+			fileContent +=indent+  
+					"<"+tag.getTagType()+">" + tag.getTagData() + "</"+tag.getTagType()+">\n"  ;
+			
 		} else {
-			System.out.println(tag.getTagData());
-		  ArrayList<Tag> tags = tag.getTagTags();
+			
+			
+		  ArrayList<BERTag> tags = tag.getTagTags();
+		  fileContent += indent + "<"+tag.getTagType()+">\n" ;
+		  indent += "    ";
 			for ( Tag tag2 : tags){
-				if(tag2 != null){
-					PrimitiveOrConstructed((BERTag)tag2);
-				}				
-			}
+		
+				PrimitiveOrConstructed((BERTag)tag2);
+				
+				
+			}	
+			indent = indent.substring(0, (indent.length()-4));
+			fileContent += indent + "</"+tag.getTagType()+">\n";
+			
 		}
 	}
 }

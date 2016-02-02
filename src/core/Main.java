@@ -1,9 +1,12 @@
 package core;
 
+import java.util.List;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,20 +16,25 @@ import rules.BERDecoder;
 import rules.BERTag;
 import rules.Decoder;
 import rules.Tag;
+import tagMapping.MapDecoder;
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
 		// NRTRDE-0201.asn
 		// NRTEST1SWETR0386
-		byte[] bytes = readBinaryFile(getCleanPath()+"/res/NRTEST1SWETR0386");
+		// CDDNKTDSWETR90904.xml.asn
+		// test
+		// CDHNDMESWETR03713		
+		byte[] bytes = readBinaryFile(getCleanPath()+"/res/CDHNDMESWETR03713");
+
 		Decoder decoder = decodeMessage("BER", bytes);
 		ArrayList<Tag> tags = decoder.getTags();
 		convertTags("BER", tags, "XML");
 
 	}
 	
-	private static void convertTags(String rule, ArrayList<Tag> tags, String format) {
+	private static void convertTags(String rule, ArrayList<Tag> tags, String format) throws IOException {
 		switch(format){
 		case "XML":
 			storedconvert.XML.convert(rule, tags);

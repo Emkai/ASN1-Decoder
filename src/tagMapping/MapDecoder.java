@@ -19,6 +19,7 @@ public class MapDecoder {
 		String tagNr;
 		String type;
 		ArrayList<String> mapValue = new ArrayList<String>();
+		int lineNumber = 0;
 		for(String line : mapFile){
 			if(line.contains("::=")){
 				if(line.contains("[APPLICATION ")){
@@ -35,11 +36,40 @@ public class MapDecoder {
 					mapValue.add(type);
 					this.map.put(("APPLICATION "+tagNr), mapValue);
 					
+					if (type.equals("SEQUENCE")){
+						readSequence(lineNumber+1, mapFile, ("APPLICATION "+tagNr));
+					}
+					
 					System.out.println("Label: " + label + ", Tag Nr: " + tagNr + ", Type: " + type);
 				}
-				//System.out.println(line);
 			}
+			lineNumber++;
 		}		
+	}
+
+	private void readSequence(int lineNumber, List<String> mapFile, String tagTypeNumber) {
+		boolean endOfSequence = false;
+		String line = "";
+		String[] splitLine;
+		ArrayList<String> sequence = new ArrayList<String>();
+		int lineNr = lineNumber+1;
+		while(!endOfSequence){
+			line = mapFile.get(lineNr);
+			if(line.equals("}")){
+				endOfSequence = true;
+				break;
+			}
+			splitLine = line.trim().replaceAll(" +", " ").split(" ");
+			for(String l : splitLine){
+				sequence.add(l);
+				System.out.println(l);
+			}
+			sequence.add(" ");
+			lineNr++;
+		}
+		this.map.put(tagTypeNumber+" SEQUENCE", sequence);
+		
+		
 	}
 	
 

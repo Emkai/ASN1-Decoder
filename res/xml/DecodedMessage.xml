@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 <Nrtrde>
     <SpecificationVersionNumber>2</SpecificationVersionNumber>
     <ReleaseVersionNumber>1</ReleaseVersionNumber>
@@ -15,17 +22,17 @@
             <CallEventDuration>195</CallEventDuration>
             <CauseForTermination>0</CauseForTermination>
             <serviceCode>
-                <TeleServiceCode>[49, 49]</TeleServiceCode>
+                <TeleServiceCode>11</TeleServiceCode>
             </serviceCode>
             <ConnectedNumber>46123123123</ConnectedNumber>
             <RecEntityId>7186</RecEntityId>
             <CallReference>0</CallReference>
             <ChargeAmount>3031</ChargeAmount>
             <Msisdn>46709999999</Msisdn>
-            <LocationArea>[0, -105, -57]</LocationArea>
-            <CellId>[0, -33, -61]</CellId>
+            <LocationArea>38855</LocationArea>
+            <CellId>57283</CellId>
         </Moc>
     </callEvents>
-    <CallEventsCount>[1]</CallEventsCount>
+    <CallEventsCount>1</CallEventsCount>
 </Nrtrde>
 

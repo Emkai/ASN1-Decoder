@@ -125,9 +125,13 @@ public class XML {
 		case "BCDString":
 			return ""+byteToBCDInt(tagData);
 		default:
-			if(string.contains("AsciiString")){
+			if(string.contains("AsciiString") | string.contains("HexString")){
 				return byteToString(tagData);
 			}
+			if(string.contains("INTEGER")){
+				return Integer.toString(byteToInt(tagData));
+			}
+			System.out.println(string);
 			return tagData.toString();
 		}
 	}

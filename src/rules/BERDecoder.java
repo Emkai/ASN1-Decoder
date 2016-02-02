@@ -87,7 +87,7 @@ public class BERDecoder extends Decoder{
 	
 	private ArrayList<String> readTag(){
 		ArrayList<String> tag = new ArrayList<String>();
-		switch ( (this.bytes[this.byteCurrently] >> 7) & 0x2 ) {
+		switch ( (this.bytes[this.byteCurrently] >> 6) & 0x3 ) {
 			case 0:
 				tag.add("Universal");
 				break;
@@ -154,6 +154,7 @@ public class BERDecoder extends Decoder{
 			}
 			// Not implemetet yet, indefinite
 			else{
+				this.byteCurrently++;
 				return -1;
 			}
 		}

@@ -1,28 +1,15 @@
 package storedconvert;
 
 
-import java.io.ByteArrayInputStream;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.io.ObjectInputStream.GetField;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-
-import javax.sound.sampled.TargetDataLine;
-import javax.swing.SingleSelectionModel;
-
-import org.omg.IOP.TAG_MULTIPLE_COMPONENTS;
-import org.omg.IOP.TAG_ORB_TYPE;
 
 import rules.BERTag;
 import rules.Tag;
@@ -36,9 +23,16 @@ public class XML {
 	static String indent = "";
 	private static MapDecoder mapDecoder;
 	
-	public static void convert(String rule, ArrayList<Tag> tags) throws IOException {
-		List<String> mapFile =  Files.readAllLines(Paths.get(getCleanPath()+"/res/NRTRDE-0201.asn"));
-		mapDecoder  = new MapDecoder(mapFile);
+	public static void convert(String rule, ArrayList<Tag> tags, String mapFileName) throws IOException {
+		List<String> mapFile = null;
+		if(mapFileName != ""){
+			 mapFile =  Files.readAllLines(Paths.get(getCleanPath()+"/"+mapFileName));
+			 mapDecoder  = new MapDecoder(mapFile);
+		}else{
+			mapDecoder  = new MapDecoder();
+		}
+		
+		
 		
 		switch(rule) {
 			case "BER":
@@ -51,10 +45,12 @@ public class XML {
 			for ( Tag tag : tags){
 				translateTag((BERTag)tag, null);
 			}
-			writer = new PrintWriter("res/xml/DecodedMessage.xml", "UTF-8");
+			System.out.println("NOW            I              WANT        TO          WRITE");
+			//System.out.println(getCleanPath()+"/res/xml/DecodedMessage.xml");
+			writer = new PrintWriter(getCleanPath()+"/DecodedMessage.xml", "UTF-8");
 			fileContent = fileContent.replaceAll("\n", System.lineSeparator());
 			writer.println(fileContent);
-			writer.close();		
+			writer.close();
 	}
 	
 	
@@ -68,13 +64,16 @@ public class XML {
 		if (parentSequence != null){
 			mapTranslation = mapDecoder.map.get(parentSequence);
 			sequenceEndOfLine = false;
-			tagType = mapTranslation.get(0);
-			while(!sequenceEndOfLine){
-				if(mapTranslation.get(0) == " "){
-					sequenceEndOfLine = true;
-				}
-				mapTranslation.remove(0);				
-			}				
+			if(mapTranslation.size() != 0){
+				tagType = mapTranslation.get(0);
+				while(!sequenceEndOfLine){
+					if(mapTranslation.get(0) == " "){
+						sequenceEndOfLine = true;
+					}
+					mapTranslation.remove(0);				
+				}	
+			}
+						
 		}
 		if (tag.getTagCP() == "Primitive" ) {
 			if(tag.getTagClass() == "Application"){
@@ -85,9 +84,16 @@ public class XML {
 				else if(tagType == null){ tagType = ""+tag.getTagType(); }
 			}
 			else if(tagType == null){ tagType = ""+tag.getTagType(); }
-			
-			fileContent += indent + "<" + tagType + ">" + interpretData( tag.getTagData(), mapTranslation.get(1) ) + "</" + tagType + ">\n";								
-		} 
+			System.out.println(tagType);
+			System.out.println(tag.getTagData());
+			System.out.println("Size:" + mapTranslation);
+			if(mapTranslation != null){
+				fileContent += indent + "<" + tagType + ">" + interpretData( tag.getTagData(), mapTranslation.get(1) ) + "</" + tagType + ">\n";
+			}
+			else{
+				fileContent += indent + "<" + tagType + ">" + tag.getTagData() + "</" + tagType + ">\n";
+			}
+		}
 		else {
 			if(tag.getTagClass() == "Application"){
 				mapTranslation = mapDecoder.map.get("APPLICATION "+tag.getTagType());
@@ -124,6 +130,8 @@ public class XML {
 			return byteToString(tagData);
 		case "BCDString":
 			return ""+byteToBCDInt(tagData);
+		case "AddressStringDigits":
+			return ""+byteToBCDInt(tagData);
 		default:
 			if(string.contains("AsciiString") | string.contains("HexString")){
 				return byteToString(tagData);
@@ -138,13 +146,13 @@ public class XML {
 
 	private static long byteToBCDInt(ArrayList<Byte> tagData) {
 		int length = tagData.size();
-		long binaryShift = 10;
+		long binaryShift = 1;
 		long result = 0;
 		int sign = 1;
 		System.out.println("Length: " + length);
-		result += ( (tagData.get(length-1) & 0xf0) >> 4 );
+		//result += ( (tagData.get(length-1) & 0xf0) >> 4 );
 		System.out.println((tagData.get(length-1) & 0xf0) >> 4);
-		for( int l = length-2; l>=0;){
+		for( int l = length-1; l>=0;){
 			result += ( tagData.get(l) & 0x0f ) *binaryShift;
 			System.out.println(( tagData.get(l) & 0x0f )*binaryShift);
 			System.out.println("Shift: " + binaryShift);
@@ -168,8 +176,11 @@ public class XML {
 		case 0xb:
 			sign = -1;
 			break;
+		default:
+			sign = 1;
+			break;
 		}
-		return result;
+		return result * sign;
 	}
 
 	private static String byteToString(ArrayList<Byte> tagData) {

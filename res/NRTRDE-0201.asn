@@ -96,7 +96,7 @@ Mtc ::= [APPLICATION 4] SEQUENCE
   cellId                     CellId                     OPTIONAL
 }
 
-Gprs ::= [APPLICATION 5] SEQUENCE
+Gprs ::= [APPLICATION 5] SEQUENCE 
 {
   imsi                       Imsi                       OPTIONAL, -- *m.m.
   imei                       Imei                       OPTIONAL,

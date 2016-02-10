@@ -1,0 +1,31 @@
+<TransferBatch>
+    <CallOriginator>[2]</CallOriginator>
+    <BasicServiceCodeList>[1]</BasicServiceCodeList>
+    <BasicServiceUsedList>[84, 69, 83, 84, 49]</BasicServiceUsedList>
+    <BasicService>[83, 87, 69, 84, 82]</BasicService>
+    <BasicServiceUsed>[51, 56, 54]</BasicServiceUsed>
+    <auditControlInfo>[50, 48, 49, 53, 49, 48, 51, 48, 49, 52, 48, 51, 50, 53]</auditControlInfo>
+    <CallReference>[43, 49, 48, 48]</CallReference>
+    <Notification>
+        <sender>
+            <34>[36, 0, 22, 0, 0, 0, -103, -97]</34>
+            <33>[53, -106, 82, 5, 34, 16, 4, 15]</33>
+            <21>[50, 48, 49, 53, 49, 48, 51, 48, 49, 52, 48, 51, 50, 53]</21>
+            <CallReference>[43, 48, 49, 48, 48]</CallReference>
+            <19>[0, -61]</19>
+            <24>[0]</24>
+            <CalledRegion>
+                <CallEventDetailsCount>12593</CallEventDetailsCount>
+            </CalledRegion>
+            <27>[52, 54, 49, 50, 51, 49, 50, 51, 49, 50, 51]</27>
+            <35>[55, 49, 56, 54]</35>
+            <23>[0]</23>
+            <25>[11, -41]</25>
+            <49>[70, 112, -103, -103, -103, -103]</49>
+            <48>[0, -105, -57]</48>
+            <47>[0, -33, -61]</47>
+        </sender>
+    </Notification>
+    <20>[1]</20>
+</TransferBatch>
+

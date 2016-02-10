@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 <Nrtrde>
     <SpecificationVersionNumber>2</SpecificationVersionNumber>
     <ReleaseVersionNumber>1</ReleaseVersionNumber>
@@ -15,8 +8,8 @@
     <UtcTimeOffset>+100</UtcTimeOffset>
     <callEvents>
         <Moc>
-            <Imsi>240016000000999</Imsi>
-            <Imei>359652052210040</Imei>
+            <Imsi>2400160000010005</Imsi>
+            <Imei>3596520522100415</Imei>
             <CallEventStartTimeStamp>20151030140325</CallEventStartTimeStamp>
             <UtcTimeOffset>+0100</UtcTimeOffset>
             <CallEventDuration>195</CallEventDuration>
@@ -28,7 +21,7 @@
             <RecEntityId>7186</RecEntityId>
             <CallReference>0</CallReference>
             <ChargeAmount>3031</ChargeAmount>
-            <Msisdn>46709999999</Msisdn>
+            <Msisdn>467099999999</Msisdn>
             <LocationArea>38855</LocationArea>
             <CellId>57283</CellId>
         </Moc>

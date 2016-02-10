@@ -13,6 +13,13 @@ public class MapDecoder {
 		this.drawMap(mapFile);
 	}
 	
+	public MapDecoder() {
+		this.map = new HashMap<String, ArrayList<String>>();
+		
+		this.map.put("EMPTYMAPISVERYEMPTY",new ArrayList<String>());
+		System.out.println("HEEEYOO");
+	}
+
 	private void drawMap(List<String> mapFile) {
 		String[] splitLine;
 		String label;

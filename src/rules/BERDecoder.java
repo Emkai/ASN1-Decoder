@@ -166,13 +166,13 @@ public class BERDecoder extends Decoder{
 		}
 	}
 	
-	private int readIndefinateLength(){
+	/*private int readIndefinateLength(){
 		this.byteCurrently++;
 		int type = (0<<7) + (this.bytes[this.byteCurrently]&0x7F);
 		if((this.bytes[this.byteCurrently]>>7 & 1) == 1){
 			type = (type<<7) + readLongType();
 		}
 		return (this.bytes[this.byteCurrently]&0x7F);
-	}
+	}*/
 
 }

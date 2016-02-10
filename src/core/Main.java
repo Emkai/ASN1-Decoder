@@ -1,22 +1,15 @@
 package core;
 
-import java.util.List;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import rules.BERDecoder;
-import rules.BERTag;
 import rules.Decoder;
 import rules.Tag;
-import tagMapping.MapDecoder;
 
 public class Main {
 
@@ -25,19 +18,34 @@ public class Main {
 		// NRTEST1SWETR0386
 		// CDDNKTDSWETR90904.xml.asn
 		// test
-		// CDHNDMESWETR03713		
-		byte[] bytes = readBinaryFile(getCleanPath()+"/res/NRTEST1SWETR0386");
+		// CDHNDMESWETR03713
+		
+		// "/res/NRTEST1SWETR0386"
+		// "/res/NRTRDE-0201.asn"
+		System.out.println(args[0]);
+		String mapFileName = "";
+		
+		
+		
+		byte[] bytes = readBinaryFile(getCleanPath()+ "/" + args[0]);
+		
+		for(int i = 0; i<(args.length-1);i++ ){
+			switch(args[i]){
+			case "-d":
+				mapFileName = args[i+1];
+				break;
+			}
+		}
 
 		Decoder decoder = decodeMessage("BER", bytes);
 		ArrayList<Tag> tags = decoder.getTags();
-		convertTags("BER", tags, "XML");
-
+		convertTags("BER", tags, "XML", mapFileName);
 	}
 	
-	private static void convertTags(String rule, ArrayList<Tag> tags, String format) throws IOException {
+	private static void convertTags(String rule, ArrayList<Tag> tags, String format, String mapFileName) throws IOException {
 		switch(format){
 		case "XML":
-			storedconvert.XML.convert(rule, tags);
+			storedconvert.XML.convert(rule, tags, mapFileName);
 			break;
 			
 		default:
@@ -73,7 +81,7 @@ public class Main {
 		return null;
 	}
 	
-	private static byte[] readBinaryFile2(String filePath) throws IOException{
+	/*private static byte[] readBinaryFile2(String filePath) throws IOException{
 		try{
 			byte[] buffer = new byte[4096];
 		    ByteArrayOutputStream ous = new ByteArrayOutputStream();
@@ -88,7 +96,7 @@ public class Main {
 		catch(Exception e){
 			throw(e);
 		}
-	}
+	}*/
 	
 	
 

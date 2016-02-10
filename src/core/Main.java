@@ -26,7 +26,7 @@ public class Main {
 		// CDDNKTDSWETR90904.xml.asn
 		// test
 		// CDHNDMESWETR03713		
-		byte[] bytes = readBinaryFile(getCleanPath()+"/res/CDHNDMESWETR03713");
+		byte[] bytes = readBinaryFile(getCleanPath()+"/res/NRTEST1SWETR0386");
 
 		Decoder decoder = decodeMessage("BER", bytes);
 		ArrayList<Tag> tags = decoder.getTags();
